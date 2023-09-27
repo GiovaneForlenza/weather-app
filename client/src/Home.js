@@ -1,23 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import "./style.scss";
+
 let resp = "";
 let data;
 const API_KEY = "e37ac004829824b7fe9c4723fed7bd07";
 let weatherIconURL, cityCoordFromNameLink;
-
-/*
-
-1 LOAD THE PAGE - default NY
-2 SEARCH FOR CITY
-3 PARSE COORDS
-4 GET CITY INFO
-5 DISPLAY CITY INFO
-
-1 LOAD PAGE - USE EFFECT
-2 Search bar - ENTER
-3 Get city coords
-
-*/
 
 function Home() {
   const [weatherData, setWeatherData] = useState({
@@ -31,17 +19,7 @@ function Home() {
   const [cityLon, setCityLon] = useState("-74.0060152");
   const [searchTerm, setSearchTerm] = useState("");
 
-  function updateWeatherData() {
-    weatherIconURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-
-    setWeatherData({
-      name: data.name,
-      temp: data.main.temp,
-      temp_max: data.main.temp_max,
-      temp_min: data.main.temp_min,
-    });
-  }
-
+  //GETS THE DAILY TEMPERATURE
   const getWeather = useCallback(async () => {
     try {
       resp = await fetch(
@@ -54,22 +32,48 @@ function Home() {
     }
   });
 
+  //UPDATES THE OBJECT WITH THE DATA
+  function updateWeatherData() {
+    weatherIconURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    setWeatherData({
+      name: data.name,
+      temp: Math.round(data.main.temp),
+      temp_max: Math.round(data.main.temp_max),
+      temp_min: Math.round(data.main.temp_min),
+    });
+  }
+
+  //GETS THE WEEKLY FORECAST
+  const getWeeklyForecast = useCallback(async () => {
+    try {
+      let resp = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=${API_KEY}&units=metric`
+      );
+
+      let data = await resp.json();
+      console.log(data.list);
+    } catch (error) {}
+  });
+
+  //UPDATES THE CITY SEARCH BAR
   const updateSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  //SUBMITS THE FORM AND STARTS THE LOOK UP PROCESS
   function submitForm(e) {
     e.preventDefault();
     getCityCoords();
   }
 
+  //TRANSFORMS THE CITY NAME INTO LAT AND LON COORDS
   const getCityCoords = useCallback(async () => {
     getCityCoordsLink();
     try {
-      const a = await fetch(`${cityCoordFromNameLink}`);
-      const b = await a.json();
-      const cityLat = b[0].lat,
-        cityLon = b[0].lon;
+      let resp = await fetch(`${cityCoordFromNameLink}`);
+      let data = await resp.json();
+      const cityLat = data[0].lat,
+        cityLon = data[0].lon;
       setCityLat(cityLat);
       setCityLon(cityLon);
       getWeather();
@@ -93,26 +97,35 @@ function Home() {
 
   useEffect(() => {
     getWeather();
+    getWeeklyForecast();
   }, [cityLat]);
 
   return (
-    <div>
-      <form action="" onSubmit={submitForm}>
-        <input
-          type="text"
-          name=""
-          id=""
-          value={searchTerm}
-          onChange={updateSearchTerm}
-        />
-      </form>
-      city: {weatherData.name} <br />
-      temp {weatherData.temp}
-      <br />
-      max temp {weatherData.temp_max}
-      <br />
-      min temp {weatherData.temp_min} <br />
-      <img src={weatherIconURL} alt="" />
+    <div id="home-container">
+      <div className="header">
+        <form action="" onSubmit={submitForm}>
+          <input
+            type="text"
+            name=""
+            id=""
+            value={searchTerm}
+            placeholder="Search a city..."
+            onChange={updateSearchTerm}
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+      <div className="content">
+        <div className="line">
+          <img src={weatherIconURL} alt="" />
+          <span id="cityName">{weatherData.name}</span>
+        </div>
+        <div className="weatherInfo">
+          <span className="temperature">{weatherData.temp} ºC</span>
+          Min {weatherData.temp_min}º | Max {weatherData.temp_max}º
+        </div>
+      </div>
     </div>
   );
 }

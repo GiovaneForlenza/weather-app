@@ -1,0 +1,52 @@
+#home-container {
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  max-width: 1000px;
+  margin: auto;
+  min-width: 400px;
+  .header {
+    margin-bottom: 20px;
+    form {
+      input {
+        width: 80%;
+        height: 30px;
+        padding: 3px;
+        font-size: 15px;
+        box-sizing: border-box;
+      }
+      button {
+        height: 30px;
+        width: 15%;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+    }
+  }
+  .content {
+    .line {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      #cityName {
+        font-size: 35px;
+        font-weight: bold;
+        color: #4580b1;
+      }
+    }
+    .weatherInfo {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      .temperature {
+        font-size: 30px;
+        font-weight: bold;
+        color: #4580b1;
+      }
+    }
+    // width: 80%;
+  }
+}
