@@ -13,6 +13,10 @@ function Home() {
     temp: "",
     temp_max: "",
     temp_min: "",
+    date_day_long: "",
+    date_day_short: "",
+    date_hour: "",
+    date_minute: "",
   });
 
   const [cityLat, setCityLat] = useState("40.7127281");
@@ -35,11 +39,16 @@ function Home() {
   //UPDATES THE OBJECT WITH THE DATA
   function updateWeatherData() {
     weatherIconURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    const date = convertUnixToDate(data.dt);
+    // console.log(date.toLocaleString("en-US", { hour: "numeric" }));
     setWeatherData({
       name: data.name,
       temp: Math.round(data.main.temp),
       temp_max: Math.round(data.main.temp_max),
       temp_min: Math.round(data.main.temp_min),
+      date_day_long: date.toLocaleString("en-US", { weekday: "long" }),
+      date_day_short: date.toLocaleString("en-US", { weekday: "short" }),
+      date_time: date.toLocaleString("en-US", { timeStyle: "short" }),
     });
   }
 
@@ -51,9 +60,12 @@ function Home() {
       );
 
       let data = await resp.json();
-      console.log(data.list);
     } catch (error) {}
   });
+
+  function convertUnixToDate(data) {
+    return new Date(data * 1000);
+  }
 
   //UPDATES THE CITY SEARCH BAR
   const updateSearchTerm = (event) => {
@@ -122,6 +134,9 @@ function Home() {
           <span id="cityName">{weatherData.name}</span>
         </div>
         <div className="weatherInfo">
+          <span id="dateTime">
+            {weatherData.date_day_long}, {weatherData.date_time}
+          </span>
           <span className="temperature">{weatherData.temp} ºC</span>
           Min {weatherData.temp_min}º | Max {weatherData.temp_max}º
         </div>
