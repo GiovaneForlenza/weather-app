@@ -10,6 +10,7 @@ let weatherIconURL, cityCoordFromNameLink;
 function Home() {
   const [weatherData, setWeatherData] = useState({
     name: "",
+    country_name: "",
     temp: "",
     temp_max: "",
     temp_min: "",
@@ -40,9 +41,9 @@ function Home() {
   function updateWeatherData() {
     weatherIconURL = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     const date = convertUnixToDate(data.dt);
-    // console.log(date.toLocaleString("en-US", { hour: "numeric" }));
     setWeatherData({
       name: data.name,
+      country_name: data.sys.country,
       temp: Math.round(data.main.temp),
       temp_max: Math.round(data.main.temp_max),
       temp_min: Math.round(data.main.temp_min),
@@ -60,6 +61,7 @@ function Home() {
       );
 
       let data = await resp.json();
+      console.log(data);
     } catch (error) {}
   });
 
@@ -131,7 +133,7 @@ function Home() {
       <div className="content">
         <div className="line">
           <img src={weatherIconURL} alt="" />
-          <span id="cityName">{weatherData.name}</span>
+          <span id="cityName">{weatherData.name}, {weatherData.country_name}</span>
         </div>
         <div className="weatherInfo">
           <span id="dateTime">
