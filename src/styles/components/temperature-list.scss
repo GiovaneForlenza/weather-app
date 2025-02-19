@@ -1,0 +1,19 @@
+@use "../variables.scss" as v;
+
+.temperature-list-wrapper {
+  .list-selection-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 16px;
+    color: v.$secondary-text-light-theme;
+    font-size: 16px;
+    p {
+      cursor: pointer;
+    }
+    .selected {
+      color: v.$main-text-light-theme;
+    }
+  }
+}

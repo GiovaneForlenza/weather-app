@@ -12,12 +12,25 @@ Current weather in location
 
 export const WEATHER_LOOKUP_OPTIONS = {
   CURRENT_WEATHER: `https://api.openweathermap.org/data/2.5/weather?q=london&units=metric&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
-  FORECAST_WEATHER: `https://api.openweathermap.org/data/2.5/forecast?q=London&cnt=5&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
+  FORECAST_WEATHER: `https://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&appid=${process.env.NEXT_PUBLIC_API_KEY}`,
 };
+
+export 
+  const ICON_URL = `https://openweathermap.org/img/wn/`;
 
 export async function getWeatherData() {
   try {
     const response = await fetch(WEATHER_LOOKUP_OPTIONS.CURRENT_WEATHER);
+    const json = await response.json();
+    return json;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+export async function getForecastData() {
+  try {
+    const response = await fetch(WEATHER_LOOKUP_OPTIONS.FORECAST_WEATHER);
     const json = await response.json();
     return json;
   } catch (err) {

@@ -2,6 +2,7 @@ import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { CiLocationOn } from "react-icons/ci";
 import { countries } from "country-data";
+import { ICON_URL } from "@/utils/weatherService";
 interface HeaderProps {
   weatherData: {
     name: string;
@@ -23,7 +24,6 @@ function Header({ weatherData }: HeaderProps) {
   const { country } = weatherData.sys;
   const { temp } = weatherData.main;
   const { description, icon } = weatherData.weather[0];
-  const ICON_URL = `https://openweathermap.org/img/wn/${icon}.png`;
   return (
     <div className="header-wrapper">
       <div className="icons-wrapper">
@@ -42,7 +42,7 @@ function Header({ weatherData }: HeaderProps) {
           </div>
         </div>
         <div className="weather-icon">
-          <img src={ICON_URL} alt="a" />
+          <img src={ICON_URL+icon+".png"} alt="a" />
         </div>
       </div>
     </div>

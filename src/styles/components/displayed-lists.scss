@@ -1,0 +1,20 @@
+@use "../variables.scss" as v;
+
+.displayed-list-wrapper {
+  padding: 4px;
+  box-sizing: border-box;
+  margin-top: 8px;
+  border-radius: 10px;
+  .displayed-list-today-wrapper {
+    .today-list-item-wrapper,
+    .temperatures {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+    }
+    .temperatures {
+      gap: 8px;
+    }
+  }
+}
