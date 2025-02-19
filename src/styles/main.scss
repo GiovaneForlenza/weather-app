@@ -1,8 +1,8 @@
-@import "variables.scss";
+@use "./variables.scss" as v;
 
 body {
-  background-color: $background-light-theme;
-  color: $main-text-light-theme;
+  background-color: v.$background-light-theme;
+  color: v.$main-text-light-theme;
 }
 
 .global-wrapper {
