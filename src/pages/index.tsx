@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import Dashboard from "@/components/Dashboard";
 
 export default function Home() {
-
-  return <div>{/* <p>{value}</p> */}</div>;
+  return (
+    <div className="global-wrapper">
+      <Dashboard />
+    </div>
+  );
 }
