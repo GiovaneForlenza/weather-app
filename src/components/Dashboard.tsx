@@ -1,29 +1,30 @@
 import { getWeatherData } from "@/utils/weatherService";
 import React, { useEffect, useState } from "react";
+import Header from "./Header";
+import { countries } from "country-data";
+import AdditionalInfo from "./AdditionalInfo";
 
 function Dashboard() {
-  const [weatherData, setWeatherData] = useState();
+  const [weatherData, setWeatherData] = useState<any>(null);
+
   useEffect(() => {
     getWeatherData().then((data) => {
       setWeatherData(data);
     });
   }, []);
+  console.log(weatherData);
 
   return (
-    // <div className="dashboard-wrapper">
     <>
-      {weatherData && weatherData.list.map((item) => (
-        <div key={item.dt}>
-          <h2>{item.dt_txt}</h2>
-          <p>Feels like: {item.main.feels_like}</p>
-          <p>Humidity: {item.main.humidity}</p>
-          <p>Temp: {item.main.temp}</p>
-          <p>Temp Max: {item.main.temp_max}</p>
-          <p>Temp Min: {item.main.temp_min}</p>
+      {weatherData ? (
+        <div className="dashboard-wrapper">
+          <Header weatherData={weatherData} />
+          <AdditionalInfo weatherData={weatherData} />
         </div>
-      ))}
+      ) : (
+        "Loading"
+      )}
     </>
-    // </div>
   );
 }
 

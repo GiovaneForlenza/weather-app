@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "country-data": "^0.0.31",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -17,6 +18,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/country-data": "^0.0.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

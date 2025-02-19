@@ -1,0 +1,38 @@
+@import "../variables.scss";
+.header-wrapper {
+  .icons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 32px;
+  }
+  .location-wrapper {
+    .city {
+      font-size: 24px;
+    }
+    .country {
+      font-size: 16px;
+      color: $secondary-text-light-theme;
+    }
+  }
+
+  .temperature-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .temperature {
+      font-size: 64px;
+    }
+    .weather-icon {
+      width: 100px;
+      aspect-ratio: 1;
+      img {
+        width: 100%;
+      }
+    }
+    .description {
+      font-size: 16px;
+      color: $secondary-text-light-theme;
+    }
+  }
+}
